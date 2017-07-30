@@ -14,9 +14,14 @@
       instantiate the class, and start filling it with instances of CacheItem.
     </description>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="10.0.0.0" />
+      <dependency id="GPS.SimpleThreading" version="1.0.0.0" />
     </dependencies>
     <releaseNotes>
+      Version 1.0.1.1
+      - Changed to correctly identify GPS.SimpleThreading as a dependency.
+      
+      Version 1.0.1.0
+      - Changed to use the ThreadSafeDictionary as the data store.
     </releaseNotes>
   </metadata>
   <files>

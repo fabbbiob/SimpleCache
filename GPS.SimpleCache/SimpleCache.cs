@@ -17,7 +17,7 @@ namespace GPS.SimpleCache
         private TimeSpan _cacheExpirationDuration = TimeSpan.Zero;
         public TimeSpan CacheExpirationDuration => _cacheExpirationDuration;
 
-        private readonly ThreadSafeList<CacheItem<K, V>> _cacheItems = new ThreadSafeList<CacheItem<K, V>>();
+        private readonly ThreadSafeDictionary<K, CacheItem<K, V>> _cacheItems = new ThreadSafeDictionary<K, CacheItem<K, V>>();
 
         private static readonly object PadLock = new object();
         private Timer _timer;
@@ -34,7 +34,7 @@ namespace GPS.SimpleCache
 
             if (items != null)
             {
-                _cacheItems.AddRange(items);
+                Parallel.ForEach(items, AddItem);
             }
 
             if (ExpirationType == CacheExpirationTypes.Timed)
@@ -53,12 +53,12 @@ namespace GPS.SimpleCache
         {
             if (item != null && item.Key != null)
             {
-                if (_cacheItems.FirstOrDefault(i => i.Key.Equals(item.Key)) != null)
+                if (_cacheItems.ContainsKey(item.Key))
                 {
                     throw new DuplicateKeyException<CacheItem<K, V>>(item);
                 }
 
-                _cacheItems.Add(item);
+                _cacheItems.Add(item.Key, item);
             }
         }
 
@@ -87,7 +87,7 @@ namespace GPS.SimpleCache
 
         public bool RemoveItem(CacheItem<K, V> item)
         {
-            return _cacheItems.Remove(item);
+            return _cacheItems.Remove(item.Key);
         }
 
         public void InvalidateCache()
@@ -116,10 +116,10 @@ namespace GPS.SimpleCache
             {
                 lock (PadLock)
                 {
-                    if (now - item.LastAccessed >= _cacheExpirationDuration)
+                    if (now - item.Value.LastAccessed >= _cacheExpirationDuration)
                     {
                         _cacheItems.Remove(item);
-                        ItemExpired?.Invoke(this, item);
+                        ItemExpired?.Invoke(this, item.Value);
                     }
                 }
             });
@@ -129,10 +129,10 @@ namespace GPS.SimpleCache
         {
             get
             {
-                var item = _cacheItems.FirstOrDefault(i => i.Key.Equals(key));
-
-                if (item != null)
+                if (_cacheItems.ContainsKey(key))
                 {
+                    var item = _cacheItems[key];
+
                     if (DateTimeOffset.UtcNow - item.LastAccessed < _cacheExpirationDuration)
                     {
                         return item;
@@ -140,7 +140,6 @@ namespace GPS.SimpleCache
 
                     throw new ItemExpiredException();
                 }
-
                 throw new ItemNotFoundException();
             }
         }
@@ -154,7 +153,7 @@ namespace GPS.SimpleCache
         {
         }
 
-        public class DuplicateKeysException<TCacheItem> : ApplicationException where TCacheItem : ICacheItem<K,V>
+        public class DuplicateKeysException<TCacheItem> : ApplicationException where TCacheItem : ICacheItem<K, V>
         {
             public ThreadSafeList<DuplicateKeyException<TCacheItem>> CacheItems =
                 new ThreadSafeList<DuplicateKeyException<TCacheItem>>();
