@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS.SimpleCache", "GPS.Simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS.SimpleCache.Tests", "GPS.SimpleCache.Tests\GPS.SimpleCache.Tests.csproj", "{D8631705-75AD-4E44-A38F-31E3E35290AB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3C0DF7A3-9E56-4B7C-AAD2-6F425D7266A1}"
+	ProjectSection(SolutionItems) = preProject
+		docs\_config.yml = docs\_config.yml
+		Deploy.ps1 = Deploy.ps1
+		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
