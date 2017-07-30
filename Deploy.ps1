@@ -28,4 +28,4 @@ function Deploy-Package
 Clear-Host
 
 #Deploy-Package -SolutionDir %1 -BuildDir %2 -Namespace %3 -Assembly %4
-Deploy-Package -SolutionDir 'F:\GPS\SimpleCache\SimpleCache' -BuildDir 'F:\GPS\SimpleCache\SimpleCache\GPS.SimpleCache\bin\Release' -Namespace "GPS.SimpleCache" -Assembly "GPS.SimpleCache.dll"
+Deploy-Package -SolutionDir 'F:\GPS\SimpleCache' -BuildDir 'F:\GPS\SimpleCache\GPS.SimpleCache\bin\Release' -Namespace "GPS.SimpleCache" -Assembly "GPS.SimpleCache.dll"
