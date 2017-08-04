@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GPS.SimpleThreading, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GPS.SimpleThreading.1.0.0.0\lib\net452\GPS.SimpleThreading.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +44,10 @@
   <ItemGroup>
     <Compile Include="CacheExpirationTypes.cs" />
     <Compile Include="CacheItem.cs" />
+    <Compile Include="DuplicateKeyException.cs" />
+    <Compile Include="DuplicateKeysException.cs" />
+    <Compile Include="ItemExpiredException.cs" />
+    <Compile Include="ItemNotFoundException.cs" />
     <Compile Include="SimpleCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
