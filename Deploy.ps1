@@ -20,7 +20,7 @@ function Deploy-Package
 
 		Set-Location $SolutionDir
 
-		packages\OctoPack.3.6.1\build\nuget.exe setApiKey 78766163-7bac-4f26-a2df-0687227420bc -source https://www.nuget.org
+		packages\OctoPack.3.6.1\build\nuget.exe setApiKey $env::NugetAPIKey -source https://www.nuget.org
 		packages\OctoPack.3.6.1\build\nuget.exe push $package -Source https://www.nuget.org/api/v2/package
 	}
 }
