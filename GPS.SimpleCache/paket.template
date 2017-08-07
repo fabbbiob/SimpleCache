@@ -1,0 +1,11 @@
+type project
+licenseUrl https://github.com/gatewayprogrammingschool/SimpleCache/blob/master/LICENSE
+projectUrl http://simplecache.gatewayprogramming.school/
+iconUrl http://gatewayprogramming.school/gps.png
+owners Gateway Programming School, Inc.
+authors The Sharp Ninja
+copyright Copyright 2017 (c) Gateway Programming School, Inc.
+summary Simple Caching Mechanism
+tags cache caching
+include-pdbs true
+

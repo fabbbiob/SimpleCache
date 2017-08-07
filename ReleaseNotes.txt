@@ -1,0 +1,15 @@
+Version 1.1.1.0
+The Sharp Ninja
+
+* Converted to Paket
+* Added ExpirationStrategy property to CacheItem.  
+	When set to Fixed, the LastAccessed property never changes and the item will 
+	expire exactly N minutes from origination where N is configured duration for 
+	the SimpleCache.
+
+
+Version 1.0.1.1
+- Changed to correctly identify GPS.SimpleThreading as a dependency.
+      
+Version 1.0.1.0
+- Changed to use the ThreadSafeDictionary as the data store.

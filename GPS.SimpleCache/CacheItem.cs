@@ -14,10 +14,11 @@ namespace GPS.SimpleCache
 
     public sealed class CacheItem<TK, TV> : INotifyPropertyChanged, IDisposable, ICacheItem<TK, TV>
     {
-        public DateTimeOffset LastUpdated = DateTimeOffset.UtcNow;
-        public DateTimeOffset LastAccessed = DateTimeOffset.UtcNow;
+        public DateTimeOffset LastUpdated { get; private set; } = DateTimeOffset.UtcNow;
+        public DateTimeOffset LastAccessed { get; private set; } = DateTimeOffset.UtcNow;
         public TK Key { get; set; } = default(TK);
         private TV _value = default(TV);
+        public ExpirationStrategies ExpirationStrategy = ExpirationStrategies.Default;
         private static readonly object PadLock = new object();
         public event PropertyChangedEventHandler PropertyChanged;
         public bool IsDisposed { get; protected set; }
@@ -28,7 +29,7 @@ namespace GPS.SimpleCache
             {
                 lock (PadLock)
                 {
-                    LastAccessed = DateTimeOffset.UtcNow;
+                    if (ExpirationStrategy != ExpirationStrategies.Fixed) LastAccessed = DateTimeOffset.UtcNow;
                     return _value;
                 }
             }
@@ -54,6 +55,9 @@ namespace GPS.SimpleCache
 
                             notifiable.PropertyChanged += Notifiable_PropertyChanged;
                         }
+
+                        if(ExpirationStrategy != ExpirationStrategies.Fixed) SetLastAccessed();
+                        LastUpdated = DateTimeOffset.UtcNow;
 
                         OnPropertyChanged();
                     }
@@ -87,7 +91,15 @@ namespace GPS.SimpleCache
 
         public DateTimeOffset SetLastAccessed()
         {
-            return (LastAccessed = DateTimeOffset.UtcNow);
+            if(ExpirationStrategy != ExpirationStrategies.Fixed)
+                return (LastAccessed = DateTimeOffset.UtcNow);
+
+            return LastAccessed;
+        }
+
+        internal void Invalidate()
+        {
+            LastAccessed = DateTimeOffset.MinValue;
         }
     }
 }

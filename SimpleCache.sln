@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{D4CCC176-63B0-4B6E-8776-D017BD1B9E59}"
+	ProjectSection(SolutionItems) = preProject
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS.SimpleCache", "GPS.SimpleCache\GPS.SimpleCache.csproj", "{B750EC97-5AA4-462A-B136-DFF97A8B00BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPS.SimpleCache.Tests", "GPS.SimpleCache.Tests\GPS.SimpleCache.Tests.csproj", "{D8631705-75AD-4E44-A38F-31E3E35290AB}"
@@ -10,8 +15,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3C0DF7A3-9E56-4B7C-AAD2-6F425D7266A1}"
 	ProjectSection(SolutionItems) = preProject
 		docs\_config.yml = docs\_config.yml
-		Deploy.ps1 = Deploy.ps1
 		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{570C451E-85E3-44A9-90CE-B80CF8774EF4}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy.ps1 = Deploy.ps1
+		ReleaseNotes.txt = ReleaseNotes.txt
 	EndProjectSection
 EndProject
 Global

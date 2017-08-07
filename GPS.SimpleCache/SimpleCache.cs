@@ -95,7 +95,7 @@ namespace GPS.SimpleCache
             }
         }
 
-        public void AddItem(K key, V value)
+        public void AddItem(K key, V value, ExpirationStrategies strategy = ExpirationStrategies.Default)
         {
             AddItem(new CacheItem<K, V>() { Key = key, Value = value});
         }
@@ -181,7 +181,7 @@ namespace GPS.SimpleCache
 
         public void InvalidateCache()
         {
-            Parallel.ForEach(_cacheItems, item => { item.Value.LastAccessed = DateTimeOffset.MinValue; });
+            Parallel.ForEach(_cacheItems, item => { item.Value.Invalidate(); });
 
             ExpireCacheItems();
 
@@ -224,7 +224,7 @@ namespace GPS.SimpleCache
 
                     if (DateTimeOffset.UtcNow - item.LastAccessed < _cacheExpirationDuration)
                     {
-                        item.LastAccessed = DateTimeOffset.UtcNow;
+                        item.SetLastAccessed();
 
                         return item;
                     }
